@@ -4,6 +4,7 @@ package audio
 
 import (
 	"bufio"
+	"cmp"
 	"context"
 	"encoding/binary"
 	"errors"
@@ -27,7 +28,7 @@ const SampleRate = 48000
 // cannot be set up, it logs why and drives the engine's clock in real time
 // without sound, so that scheduled events such as shutdown still happen.
 func Run(ctx context.Context, eng *engine.Engine, path string, log *slog.Logger) {
-	p, err := open(ctx, eng, path, log)
+	octx, p, err := open(ctx, eng, path, log)
 	if ctx.Err() != nil {
 		return
 	}
@@ -36,20 +37,36 @@ func Run(ctx context.Context, eng *engine.Engine, path string, log *slog.Logger)
 		runClock(ctx, eng)
 		return
 	}
-	<-ctx.Done()
-	if err := p.Close(); err != nil {
-		log.Warn("closing audio output", "err", err)
+	defer func() {
+		if err := p.Close(); err != nil {
+			log.Warn("closing audio output", "err", err)
+		}
+	}()
+	// oto reports device failures asynchronously.
+	t := time.NewTicker(time.Second)
+	defer t.Stop()
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-t.C:
+			if err := cmp.Or(octx.Err(), p.Err()); err != nil {
+				log.Error("audio output failed, playing silently", "err", err)
+				runClock(ctx, eng)
+				return
+			}
+		}
 	}
 }
 
-func open(ctx context.Context, eng *engine.Engine, path string, log *slog.Logger) (*oto.Player, error) {
+func open(ctx context.Context, eng *engine.Engine, path string, log *slog.Logger) (*oto.Context, *oto.Player, error) {
 	if path == "" {
-		return nil, errors.New("no SoundFont found")
+		return nil, nil, errors.New("no SoundFont found")
 	}
 	start := time.Now()
 	synth, err := loadSynth(path)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	log.Info("loaded SoundFont", "path", path, "took", time.Since(start).Round(time.Millisecond))
 
@@ -60,17 +77,20 @@ func open(ctx context.Context, eng *engine.Engine, path string, log *slog.Logger
 		ApplicationName: "alda-player",
 	})
 	if err != nil {
-		return nil, fmt.Errorf("opening audio device: %w", err)
+		return nil, nil, fmt.Errorf("opening audio device: %w", err)
 	}
 	select {
 	case <-ready:
 	case <-ctx.Done():
-		return nil, ctx.Err()
+		return nil, nil, ctx.Err()
+	}
+	if err := octx.Err(); err != nil {
+		return nil, nil, err
 	}
 	p := octx.NewPlayer(&stream{eng: eng, synth: synth})
 	p.Play()
 	log.Info("audio output started")
-	return p, nil
+	return octx, p, nil
 }
 
 func loadSynth(path string) (*meltysynth.Synthesizer, error) {
