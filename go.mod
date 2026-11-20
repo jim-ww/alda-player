@@ -15,3 +15,5 @@ require (
 	github.com/jfreymuth/pulse v0.1.3 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 )
+
+replace github.com/sinshu/go-meltysynth => ./third_party/go-meltysynth

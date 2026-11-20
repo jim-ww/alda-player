@@ -20,11 +20,15 @@ buildGoModule {
     fileset = lib.fileset.unions [
       ./go.mod
       ./go.sum
+      ./third_party
       (lib.fileset.fileFilter (f: f.hasExt "go") ./.)
     ];
   };
 
-  vendorHash = "sha256-ryw0Tp6oytYwSz5IB9zghyvFP5MJ+ctr6zLT5qVuXPA=";
+  vendorHash = "sha256-sv1VjVAZIqZj/ZIW3L7lEAgcVibGJq4U2+dk37G2gfs=";
+
+  # A separate module, used through a replace directive.
+  excludedPackages = [ "third_party" ];
 
   env.CGO_ENABLED = 0;
   ldflags = [
