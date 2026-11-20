@@ -2,3 +2,5 @@ github.com/daveyarwood/go-osc v0.0.0-20200229013406-0675d0af5e0b h1:7Fw67Bi/cmrg
 github.com/daveyarwood/go-osc v0.0.0-20200229013406-0675d0af5e0b/go.mod h1:da7/n4R+yocxP9nqBc2kbUpe0PwlinMHS00O5ywd9+s=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
+gitlab.com/gomidi/midi/v2 v2.3.24 h1:afkq5nhlzKvZaj9QK80YbK8tH3lIlKLnPPP9HxxD7Do=
+gitlab.com/gomidi/midi/v2 v2.3.24/go.mod h1:jDpP4O4skYi+7iVwt6Zyp18bd2M4hkjtMuw2cmgKgfw=
