@@ -60,4 +60,4 @@ doesn't use them.
 `83YGRqP8uHed6NeegZQeX9ccCxbzoRHHEEi7pTwk4aqdJZEVXXA6NWtetnsEM2v33zFBBt3Rp6DNhU9qhJEGPspU14yN8t7`
 
 ## License
-GPL-3.0. Free to use, study, share, and modify — provided you keep the same freedoms for others.
+GPL-3.0-or-later. Free to use, study, share, and modify — provided you keep the same freedoms for others.
