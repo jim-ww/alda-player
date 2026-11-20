@@ -34,6 +34,9 @@ from the binary cache; only this player is built.
 
 Or try it: `nix run github:jim-ww/alda-player#alda -- play -c "piano: c8 d e f g2"`
 
+Players that are already running are reused, whichever binary they are.
+After switching from the JVM player, run `alda shutdown` once.
+
 ### Go
 
 ```sh

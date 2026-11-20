@@ -17,11 +17,21 @@
       # nixpkgs' alda is a symlinkJoin of the Go client and the JVM player.
       # Swap the player in that join only: the client keeps its store path
       # (so it comes from the binary cache) and the JVM player is never
-      # built or fetched.
+      # built or fetched. The client finds alda-player on PATH only, so wrap
+      # it to put these players first, ahead of any other installed alda.
       withPlayers =
-        alda: players:
+        pkgs: alda: players:
         alda.overrideAttrs (old: {
           paths = builtins.filter (p: !lib.hasInfix "-alda-player-" (toString p)) old.paths ++ players;
+          nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ pkgs.makeBinaryWrapper ];
+          # symlinkJoin bakes postBuild into buildCommand.
+          buildCommand =
+            old.buildCommand
+            + lib.optionalString (players != [ ]) ''
+              client=$(readlink -f $out/bin/alda)
+              rm $out/bin/alda
+              makeWrapper "$client" $out/bin/alda --prefix PATH : ${lib.makeBinPath players}
+            '';
           meta = old.meta // {
             sourceProvenance = [ lib.sourceTypes.fromSource ];
           };
@@ -32,7 +42,7 @@
     {
       overlays.default = final: prev: {
         alda-player = playerFor final prev.alda;
-        alda = withPlayers prev.alda [ final.alda-player ];
+        alda = withPlayers final prev.alda [ final.alda-player ];
       };
 
       packages = forAllSystems (
@@ -43,7 +53,7 @@
         in
         {
           inherit alda-player;
-          alda = withPlayers pkgs.alda [ alda-player ];
+          alda = withPlayers pkgs pkgs.alda [ alda-player ];
           default = alda-player;
         }
       );
@@ -59,7 +69,7 @@
               pkgs.go
               pkgs.gopls
               # The client only; the end-to-end test builds its own player.
-              (withPlayers pkgs.alda [ ])
+              (withPlayers pkgs pkgs.alda [ ])
             ];
             ALDA_SOUNDFONT = "${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2";
           };
