@@ -1,6 +1,16 @@
 github.com/daveyarwood/go-osc v0.0.0-20200229013406-0675d0af5e0b h1:7Fw67Bi/cmrgvVt/ZAoVy6Lhmt3AeDutl/ksbil/gkY=
 github.com/daveyarwood/go-osc v0.0.0-20200229013406-0675d0af5e0b/go.mod h1:da7/n4R+yocxP9nqBc2kbUpe0PwlinMHS00O5ywd9+s=
+github.com/ebitengine/oto/v3 v3.5.1 h1:7gL5DxxSQp8S1Me2jDSp+gSAyondYxpjM5RPBBqLT0c=
+github.com/ebitengine/oto/v3 v3.5.1/go.mod h1:Elkm7yzTRns3w2efvibzVOoQ65YOwmec9a76dCiK10o=
+github.com/ebitengine/purego v0.11.0 h1:jhp/D+Nyv7UUW8HAcmcjt2N2rYrYi9m3SL21k0Ua/NI=
+github.com/ebitengine/purego v0.11.0/go.mod h1:DCHPP08djqhNSoTfImcnHYQRZmd0qhakvrozqaEYhGQ=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
+github.com/jfreymuth/pulse v0.1.3 h1:bc5TdxiB8E+2INnFjFWWgyfgXtz2IyNNNCX+Wt/ZD14=
+github.com/jfreymuth/pulse v0.1.3/go.mod h1:cpYspI6YljhkUf1WLXLLDmeaaPFc3CnGLjDZf9dZ4no=
+github.com/sinshu/go-meltysynth v0.0.0-20230205031334-05d311382fc4 h1:VgeknFh4pciKVtwtjn9tZtItvV20x/+10NnUXKfyW6s=
+github.com/sinshu/go-meltysynth v0.0.0-20230205031334-05d311382fc4/go.mod h1:Afi/YpLztHvWSbiLFi6RgtxLLwmIiRmd/q7f3Ymed2g=
 gitlab.com/gomidi/midi/v2 v2.3.24 h1:afkq5nhlzKvZaj9QK80YbK8tH3lIlKLnPPP9HxxD7Do=
 gitlab.com/gomidi/midi/v2 v2.3.24/go.mod h1:jDpP4O4skYi+7iVwt6Zyp18bd2M4hkjtMuw2cmgKgfw=
+golang.org/x/sys v0.47.0 h1:o7XGOvZQCADBQQ4Y7VNq2dRWQR7JmOUW8Kxx4ZsNgWs=
+golang.org/x/sys v0.47.0/go.mod h1:4GL1E5IUh+htKOUEOaiffhrAeqysfVGipDYzABqnCmw=
