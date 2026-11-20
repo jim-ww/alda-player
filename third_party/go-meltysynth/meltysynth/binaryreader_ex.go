@@ -8,7 +8,7 @@ import (
 
 func readFourCC(r io.Reader) (string, error) {
 	var data [4]byte
-	n, err := r.Read(data[:])
+	n, err := io.ReadFull(r, data[:])
 	if err != nil {
 		return "", err
 	}
@@ -28,7 +28,7 @@ func readFourCC(r io.Reader) (string, error) {
 
 func readFixedLengthString(r io.Reader, length int32) (string, error) {
 	var data []byte = make([]byte, length)
-	n, err := r.Read(data[:])
+	n, err := io.ReadFull(r, data[:])
 	if err != nil {
 		return "", err
 	}

@@ -43,7 +43,7 @@ func readGeneratorsFromChunk(r io.Reader, size int32) ([]generator, error) {
 	}
 
 	// The last one is the terminator.
-	n, err = r.Read(make([]byte, 4))
+	n, err = io.ReadFull(r, make([]byte, 4))
 	if err != nil {
 		return nil, err
 	}

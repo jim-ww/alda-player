@@ -105,7 +105,7 @@ func readSampleHeadersFromChunk(r io.Reader, size int32) ([]*SampleHeader, error
 	}
 
 	// The last one is the terminator.
-	n, err = r.Read(make([]byte, 46))
+	n, err = io.ReadFull(r, make([]byte, 46))
 	if err != nil {
 		return nil, err
 	}

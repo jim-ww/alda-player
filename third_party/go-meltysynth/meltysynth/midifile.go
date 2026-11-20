@@ -148,7 +148,7 @@ func readTrack(r io.Reader) ([]message, []int32, error) {
 		return nil, nil, fmt.Errorf(`the chunk type must be "MTrk", but was %q`, chunkType)
 	}
 
-	r.Read(make([]byte, 4))
+	io.ReadFull(r, make([]byte, 4))
 
 	messages := make([]message, 0, 300)
 	ticks := make([]int32, 0, 300)
@@ -209,7 +209,7 @@ func readTrack(r io.Reader) ([]message, []int32, error) {
 			}
 			switch metaEvent {
 			case 0x2F: // End of Track
-				n, err = r.Read(make([]byte, 1))
+				n, err = io.ReadFull(r, make([]byte, 1))
 				if err != nil {
 					return nil, nil, err
 				}
@@ -326,7 +326,7 @@ func readTempo(r io.Reader) (int32, error) {
 	}
 
 	var bs [3]byte
-	n, err := r.Read(bs[:])
+	n, err := io.ReadFull(r, bs[:])
 	if err != nil {
 		return 0, err
 	}
@@ -346,7 +346,7 @@ func discardData(r io.Reader) error {
 		return err
 	}
 
-	n, err := r.Read(make([]byte, size))
+	n, err := io.ReadFull(r, make([]byte, size))
 	if err != nil {
 		return err
 	}

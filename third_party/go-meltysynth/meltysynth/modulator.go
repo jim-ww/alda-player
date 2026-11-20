@@ -11,7 +11,7 @@ func discardModulatorData(r io.Reader, size int32) error {
 		return errors.New("the modulator list is invalid")
 	}
 
-	n, err := r.Read(make([]byte, size))
+	n, err := io.ReadFull(r, make([]byte, size))
 	if err != nil {
 		return err
 	}
