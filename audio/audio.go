@@ -3,7 +3,6 @@
 package audio
 
 import (
-	"bufio"
 	"cmp"
 	"context"
 	"encoding/binary"
@@ -11,8 +10,6 @@ import (
 	"fmt"
 	"log/slog"
 	"math"
-	"os"
-	"runtime/debug"
 	"time"
 
 	"github.com/ebitengine/oto/v3"
@@ -94,12 +91,11 @@ func open(ctx context.Context, eng *engine.Engine, path string, log *slog.Logger
 }
 
 func loadSynth(path string) (*meltysynth.Synthesizer, error) {
-	f, err := os.Open(path)
+	data, err := mapFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("loading SoundFont: %w", err)
 	}
-	defer f.Close()
-	sf, err := meltysynth.NewSoundFont(bufio.NewReaderSize(f, 1<<20))
+	sf, err := meltysynth.NewSoundFontFromBytes(data)
 	if err != nil {
 		return nil, fmt.Errorf("loading SoundFont %s: %w", path, err)
 	}
@@ -107,9 +103,6 @@ func loadSynth(path string) (*meltysynth.Synthesizer, error) {
 	if err != nil {
 		return nil, fmt.Errorf("creating synthesizer: %w", err)
 	}
-	// Parsing allocates about as much garbage as the sample data itself;
-	// return it to the OS instead of keeping the peak resident.
-	debug.FreeOSMemory()
 	return s, nil
 }
 

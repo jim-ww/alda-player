@@ -25,7 +25,7 @@ buildGoModule {
     ];
   };
 
-  vendorHash = "sha256-tNFBIRqoEZ2f+f+qglaR/rUhevw/i7QdR4fA8KMovHU=";
+  vendorHash = "sha256-0/3JRwS7aZwSGN8pr6cjaHZ/+JV6UMgfNj3vm5NIGyY=";
 
   # A separate module, used through a replace directive.
   excludedPackages = [ "third_party" ];

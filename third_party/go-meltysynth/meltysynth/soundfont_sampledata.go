@@ -58,11 +58,15 @@ func newSoundFontSampleData(r io.Reader) (*soundFontSampleData, error) {
 		switch id {
 		case "smpl":
 			result.bitsPerSample = 16
-			result.samples = make([]int16, size/2)
-			err = binary.Read(r, binary.LittleEndian, result.samples)
+			if br, ok := r.(*byteReader); ok {
+				result.samples, err = br.int16s(int(size))
+			} else {
+				result.samples = make([]int16, size/2)
+				err = binary.Read(r, binary.LittleEndian, result.samples)
+			}
 		case "sm24":
 			// 24 bit audio is not supported.
-			n, err = r.Read(make([]byte, size))
+			n, err = io.ReadFull(r, make([]byte, size))
 			if n != int(size) {
 				return nil, errors.New("failed to read the 24 bit audio data")
 			}

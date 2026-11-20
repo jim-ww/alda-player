@@ -17,6 +17,19 @@ type SoundFont struct {
 }
 
 func NewSoundFont(r io.Reader) (*SoundFont, error) {
+	return newSoundFont(r)
+}
+
+// NewSoundFontFromBytes parses a SoundFont held in memory. On little-endian
+// machines WaveData aliases data instead of copying it, so data must stay
+// valid and unmodified while the SoundFont is in use. Loading a
+// memory-mapped file this way takes milliseconds and shares the sample data
+// between processes through the page cache.
+func NewSoundFontFromBytes(data []byte) (*SoundFont, error) {
+	return newSoundFont(&byteReader{data: data})
+}
+
+func newSoundFont(r io.Reader) (*SoundFont, error) {
 	chunkId, err := readFourCC(r)
 	if err != nil {
 		return nil, err

@@ -167,9 +167,8 @@ func runPlayer(ctx context.Context, cfg config, stdout io.Writer) error {
 
 	eng := engine.New(audio.SampleRate, log)
 
-	// The SoundFont takes about a second and over 100 MB to load, so it is
-	// only loaded by a player that is asked to play, not by every idle
-	// player in the client's pool.
+	// Audio is only set up by a player that is asked to play, so the idle
+	// players in the client's pool don't hold the audio device.
 	var wg sync.WaitGroup
 	defer func() {
 		shutdown()
