@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"alda-player/engine"
+	"github.com/jim-ww/alda-player/engine"
 )
 
 // logHandler formats records like the original player's log4j layout:

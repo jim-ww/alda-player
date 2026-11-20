@@ -15,7 +15,7 @@ import (
 	"github.com/ebitengine/oto/v3"
 	"github.com/sinshu/go-meltysynth/meltysynth"
 
-	"alda-player/engine"
+	"github.com/jim-ww/alda-player/engine"
 )
 
 // SampleRate is the engine clock and output rate in frames per second.

@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"alda-player/osc"
+	"github.com/jim-ww/alda-player/osc"
 )
 
 // LevelTrace logs every received OSC message.

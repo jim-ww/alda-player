@@ -1,4 +1,4 @@
-module alda-player
+module github.com/jim-ww/alda-player
 
 go 1.26.0
 

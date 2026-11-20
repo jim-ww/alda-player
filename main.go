@@ -22,9 +22,9 @@ import (
 	"syscall"
 	"time"
 
-	"alda-player/audio"
-	"alda-player/engine"
-	"alda-player/state"
+	"github.com/jim-ww/alda-player/audio"
+	"github.com/jim-ww/alda-player/engine"
+	"github.com/jim-ww/alda-player/state"
 )
 
 // version must equal the alda client's version: the client only discovers
